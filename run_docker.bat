@@ -35,6 +35,6 @@ echo.
 echo Running %myfolder% in new container:
 
 echo - Running container...
-docker run -p 8080:8080 --name=%myfolder% -v c:\data:/data %myfolder%
+docker run -p 8080:8080 --name=%myfolder% -v c:\data\%myfolder%:/data %myfolder%
 
 PAUSE
