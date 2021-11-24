@@ -6,14 +6,36 @@ set MYDIR1=%MYDIR:~0,-1%
 
 for %%f in (%MYDIR1%) do set myfolder=%%~nxf
 
-echo Removing old container.
+
+echo.
+echo Removing old container:
+
+echo - Stopping old container...
 docker stop %myfolder%
+echo - Removing old container...
 docker rm %myfolder%
 
-echo Create volume
+
+echo.
+echo Creating volume %myfolder%_vol:
+
+if not exist "c:\data\%myfolder%" (
+    echo - Creating folder...
+    mkdir c:\data\%myfolder%
+)
+
+if not exist "c:\data\%myfolder%\home.txt" (
+    echo - Creating file...
+    break>"c:\data\%myfolder%\home.txt"
+)
+
+echo - Creating volume...
 docker volume create %myfolder%_vol
 
-echo Running %myfolder% in new container.
-docker run -d -p 8080:8080 --name=%myfolder% -v %myfolder%_vol:/data/storage %myfolder%
+echo.
+echo Running %myfolder% in new container:
+
+echo - Running container...
+docker run -p 8080:8080 --name=%myfolder% -v %myfolder%_vol:/data %myfolder%
 
 PAUSE
