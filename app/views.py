@@ -5,4 +5,8 @@ from flask import render_template
 @app.route("/")
 @app.route("/home")
 def home():
-    return render_template("home.html")
+
+    with open('/data/home.txt') as f:
+        text = ''.join(f.readlines())
+
+    return render_template("home.html", text=text)
