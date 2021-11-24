@@ -10,7 +10,10 @@ echo Removing old container.
 docker stop %myfolder%
 docker rm %myfolder%
 
+echo Create volume
+docker volume create %myfolder%_vol
+
 echo Running %myfolder% in new container.
-docker run -p 8080:8080 --name=%myfolder% %myfolder%
+docker run -d -p 8080:8080 --name=%myfolder% -v %myfolder%_vol:/data/storage %myfolder%
 
 PAUSE
